@@ -77,6 +77,8 @@ Bladex.AddInputAction("BrwdUp",0)
 
 Bladex.AddInputAction("Show Scorer",0)
 Bladex.AddInputAction("Send Message",0)
+Bladex.AddInputAction("SaveGameQuick",0)
+Bladex.AddInputAction("LoadGameQuick",0)
 
 
 Bladex.AddInputAction("TurnInRelax",0)

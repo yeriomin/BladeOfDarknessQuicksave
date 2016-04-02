@@ -59,7 +59,10 @@ def LoadGameAux(name):
 def LoadGameFromDisk(menu_class):
 	LoadGameAux("SaveGame"+menu_class.MenuDescr["Clave"])
 
-def SaveGameToDisk(menu_class):
+def LoadGameQuick():
+	Bladex.SetRunString("Bladex.StopTime();Bladex.PauseSoundSystem();Bladex.BeginLoadGame();execfile=\"execfile('../../Scripts/sys_init.py');execfile('../../Save/SaveGameQuick.py')\";file=open('../../Save/SaveGameQuick_files/auxaux');aux=file.read();file.close();Bladex.CloseLevel(execfile,aux);Bladex.RestartTime();Bladex.ResumeSoundSystem()");
+
+def SaveGameAux(key, isQuick):
 	import Menu
 	import Scorer
 	import MenuText
@@ -69,14 +72,15 @@ def SaveGameToDisk(menu_class):
 	global SaveGameString
 
 	# Back to game
-	Menu._MainMenu.DeActivateMenuItem()
-	Menu._MainMenu.DeActivateMenuItem()
-	Menu._MainMenu.DeActivateMenuItem()
-	Menu._MainMenu.DeActivateMenuItem()
+	if not isQuick:
+		Menu._MainMenu.DeActivateMenuItem()
+		Menu._MainMenu.DeActivateMenuItem()
+		Menu._MainMenu.DeActivateMenuItem()
+		Menu._MainMenu.DeActivateMenuItem()
 	
 	
 	# save aditional data
-	file = open("../../Save/"+menu_class.MenuDescr["Clave"]+".sv","w")
+	file = open("../../Save/"+key+".sv","w")
 
 	char = Bladex.GetEntity("Player1")
 	if char.Kind[0] =="K":
@@ -112,14 +116,19 @@ def SaveGameToDisk(menu_class):
 
 	# save Screen shoot
 	Scorer.SetVisible(0)
-	Bladex.SaveScreenShot('../../Save/'+menu_class.MenuDescr["Clave"]+'.BMP',160,120)
-	SaveGameString = "import GameState;state=GameState.WorldState();state.GetState();state.SaveState('../../Save/SaveGame"+menu_class.MenuDescr["Clave"]+".py');state=None;GameState=None;"
+	Bladex.SaveScreenShot('../../Save/'+key+'.BMP',160,120)
+	SaveGameString = "import GameState;state=GameState.WorldState();state.GetState();state.SaveState('../../Save/SaveGame"+key+".py');state=None;GameState=None;"
 
 	# Save the game
 	Bladex.PauseSoundSystem()
 	Bladex.StopTime()
 	Bladex.SetRunString(SaveGameString+"Scorer.SetVisible(1);Bladex.RestartTime();Bladex.ResumeSoundSystem()")
-	
+
+def SaveGameToDisk(menu_class):
+	SaveGameAux(menu_class.MenuDescr["Clave"], 0)
+
+def SaveGameQuick():
+	SaveGameAux("Quick", 1)
 
 def GetBack(menu_class):
 	import Menu
@@ -340,6 +349,16 @@ def CreateMenu(MenuName,SaveFlag):
 		                    "Font"           : Menu.MenuFontMed,
 		                    "Kind"           : MenuWidget.B_MenuItemTextNoFX,
 		                    "Command"        : RestartLevel
+		                     })
+
+	if (not SaveFlag) and (os.path.exists("../../Save/SaveGameQuick.py")):
+		Save_Menu.append(  {"Name"           : MenuText.GetMenuText("Quick Load"),
+		                    "VSep"           : 10,
+		                    "Clave"          : "Quick",
+		                    "FocusCallBack"  : FocusOnBitmap,
+		                    "Font"           : Menu.MenuFontMed,
+		                    "Kind"           : MenuWidget.B_MenuItemTextNoFX,
+		                    "Command"        : LoadGameFromDisk
 		                     })
 
 	
