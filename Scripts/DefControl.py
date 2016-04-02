@@ -71,6 +71,8 @@ Bladex.AssocKey("Next View","Keyboard","Add")
 Bladex.AssocKey("Last View","Keyboard","Subtract")
 Bladex.AssocKey("Show Scorer","Keyboard","Backspace")
 Bladex.AssocKey("Send Message","Keyboard","T")
+Bladex.AssocKey("SaveGameQuick","Keyboard","F5")
+Bladex.AssocKey("LoadGameQuick","Keyboard","F9")
 
 # Mouse stuff
 Bladex.AssocKey("RotateX","Mouse","X_Axis")

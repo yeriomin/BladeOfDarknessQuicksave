@@ -82,6 +82,7 @@ def InitBindings (PlayerName):
 	#Bladex.UnBindAll()
 	import netgame
 	import NetActions
+	import SaveGame
 	if netgame.GetNetState() == 0:
 		import DefaultSelectionData
 		import Scorer
@@ -192,6 +193,8 @@ def InitBindings (PlayerName):
 	
 	Bladex.AddBoundFunc("ToggleProfiling",Actions.ToggleProfiling)
 	Bladex.AddBoundFunc("ToggleInvincibility",Actions.ToggleInvincibility)
+	Bladex.AddBoundFunc("SaveGameQuick",SaveGame.SaveGameQuick)
+	Bladex.AddBoundFunc("LoadGameQuick",SaveGame.LoadGameQuick)
 
 def SetNoConfigurableActions():
 	Bladex.AssocKey("LaunchTravel","Keyboard","F1")
@@ -225,6 +228,8 @@ ConfigurableActions =[
 			("Last View",      "Last View",               []),
 			("Arena Scorer",   "Show Scorer",             []),
 			("Send Message",   "Send Message",            []),
+			("Quick Save",     "SaveGameQuick",           []),
+			("Quick Load",     "LoadGameQuick",           []),
 			
 			#("LaunchTravel",   "LaunchTravel",           []),
 
